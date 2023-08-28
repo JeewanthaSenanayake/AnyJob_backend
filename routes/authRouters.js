@@ -65,7 +65,7 @@ authRouters.post('/login', async (req, res) => {
                         // console.log(data[i]);
                         dataFound = false;
                         isMatch = true;
-                        res.json({
+                        res.status(200).json({
                             "id": data[i]._id,
                             "uname": data[i].uname,
                             "role": data[i].role

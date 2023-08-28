@@ -21,12 +21,14 @@ accountRouters.post('/create_account', async (req, res) => {
         id: req.body.id,
         role: req.body.role,
         pImgUrl: req.body.pImgUrl,
-        workImgUrl: req.body.workImgUrl
+        workImgUrl: req.body.workImgUrl,
+        descrip: req.body.descrip
     })
 
     try {
         const dataToSave = await data.save();
-        res.status(200).json({ })
+        console.log("kjhv")
+        res.status(200).json({"masage":"sucessfull" })
     }
     catch (error) {
         res.status(400).json({ message: error.message })
