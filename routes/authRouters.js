@@ -42,7 +42,7 @@ authRouters.post('/sing_up', async (req, res) => {
 
 });
 
-authRouters.get('/login', async (req, res) => {
+authRouters.post('/login', async (req, res) => {
 
     let enteredPassword = req.body.password;
     let dataFound = true;
