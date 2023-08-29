@@ -30,6 +30,8 @@ app.listen(3000, () => {
 const authRouters = require('./routes/authRouters');
 const accountRouters = require('./routes/account');
 const getWorkersRout = require('./routes/getWorker');
+const requestRout = require('./routes/request');
 app.use('/api/auth', authRouters);
 app.use('/api/account', accountRouters)
 app.use('/api/woker', getWorkersRout)
+app.use('/api/request', requestRout)
