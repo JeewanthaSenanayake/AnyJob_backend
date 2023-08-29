@@ -36,8 +36,8 @@ requestRout.get(`/admin_notification/:id`, async (req, res) => {
                     .exec()
                     .then(async (udata) => {
                         
-                        udata.request_ref = data._id;
-                        console.log(udata)
+                        udata[0].request_ref = data._id;
+                        console.log(udata[0])
                         finalData.push(udata[0])
                     })
             }
