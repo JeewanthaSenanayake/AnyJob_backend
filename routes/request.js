@@ -1,5 +1,6 @@
 const express = require('express');
 const Model = require('../models/request');
+const AccountModel = require('../models/account');
 
 const requestRout = express.Router()
 
@@ -18,6 +19,33 @@ requestRout.post('/make_request', async (req, res) => {
         res.status(400).json({ message: error.message })
     }
 
+})
+
+requestRout.get(`/admin_notification/:id`, async (req, res) => {
+    const id = req.params.id;
+
+    await Model.find({ woker_id: id, requested: "1" })
+        .exec()
+        .then(async (data) => {
+
+            console.log(data);
+            
+            let finalData=[];
+            for (const iterator of data) {
+                await AccountModel.find({ id: iterator.cus_id })
+                    .exec()
+                    .then(async (udata) => {
+                        console.log(udata)
+                        finalData.push(udata[0])
+                    })
+            }
+            res.status(200).json(finalData)
+
+        })
+        .catch((err) => {
+            // Handle error
+            res.status(500).json({ error: 'Internal server error' });
+        });
 })
 
 
