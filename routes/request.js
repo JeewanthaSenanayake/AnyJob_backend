@@ -35,6 +35,8 @@ requestRout.get(`/admin_notification/:id`, async (req, res) => {
                 await AccountModel.find({ id: iterator.cus_id })
                     .exec()
                     .then(async (udata) => {
+                        
+                        udata.request_ref = data._id;
                         console.log(udata)
                         finalData.push(udata[0])
                     })
