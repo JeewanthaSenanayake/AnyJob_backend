@@ -63,7 +63,7 @@ const dataSchema = new mongoose.Schema({
     },
     workImgUrl: {
         required: false,
-        type: Array
+        type: String
     }
 })
 

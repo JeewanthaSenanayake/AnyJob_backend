@@ -27,7 +27,6 @@ accountRouters.post('/create_account', async (req, res) => {
 
     try {
         const dataToSave = await data.save();
-        console.log("kjhv")
         res.status(200).json({"masage":"sucessfull" })
     }
     catch (error) {
