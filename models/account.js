@@ -64,6 +64,10 @@ const dataSchema = new mongoose.Schema({
     workImgUrl: {
         required: false,
         type: String
+    },
+    rating: {
+        required: false,
+        type: Number
     }
 })
 
