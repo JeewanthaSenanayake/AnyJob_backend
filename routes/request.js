@@ -25,8 +25,8 @@ requestRout.post('/update_request', async (req, res) => {
     await Model.find({ woker_id: req.body.woker_id, requested: "1", cus_id: req.body.cus_id })
         .exec()
         .then(async (data) => {
-                let val = data[0];
-                val.requested = req.body.requested;
+            let val = data[0];
+            val.requested = req.body.requested;
             try {
                 const dataToSave = await val.save();
                 res.status(200).json({ "id": dataToSave._id })
@@ -78,16 +78,22 @@ requestRout.get(`/cus_notification/:id`, async (req, res) => {
         .exec()
         .then(async (data) => {
 
-            // console.log(data);
-
             let finalData = [];
             for (const iterator of data) {
-                await AccountModel.find({ id: iterator.woker_id })
-                    .exec()
-                    .then(async (udata) => {
+                if (iterator.requested == 2 || iterator.requested == 3) {
+                    await AccountModel.find({ id: iterator.woker_id })
+                        .exec()
+                        .then(async (udata) => {
+                            let dataR = {
+                                "name":udata[0].fname + " " + udata[0].lname,
+                                "category" : udata[0].category,
+                                "status" : iterator.requested
+                            }
+                            finalData.push(dataR)
 
-                        finalData.push(udata[0])
-                    })
+
+                        })
+                }
             }
             res.status(200).json(finalData)
 
