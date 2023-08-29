@@ -22,7 +22,8 @@ accountRouters.post('/create_account', async (req, res) => {
         role: req.body.role,
         pImgUrl: req.body.pImgUrl,
         workImgUrl: req.body.workImgUrl,
-        descrip: req.body.descrip
+        descrip: req.body.descrip,
+        rating: req.body.rating
     })
 
     try {

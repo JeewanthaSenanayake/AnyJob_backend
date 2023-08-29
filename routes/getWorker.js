@@ -39,7 +39,7 @@ getWorkersRout.get(`/get_woker_by_id/:id`, async (req, res) => {
         .then(async (data) => {
             
             console.log("data found");
-            res.status(200).json(data)
+            res.status(200).json(data[0])
 
         })
         .catch((err) => {
