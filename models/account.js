@@ -50,7 +50,7 @@ const dataSchema = new mongoose.Schema({
         type: String
     },
     descrip: {
-        required: true,
+        required: false,
         type: String
     },
     role: {
