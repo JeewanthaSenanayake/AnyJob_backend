@@ -71,5 +71,32 @@ requestRout.get(`/admin_notification/:id`, async (req, res) => {
         });
 })
 
+requestRout.get(`/cus_notification/:id`, async (req, res) => {
+    const id = req.params.id;
+
+    await Model.find({ cus_id: id })
+        .exec()
+        .then(async (data) => {
+
+            // console.log(data);
+
+            let finalData = [];
+            for (const iterator of data) {
+                await AccountModel.find({ id: iterator.woker_id })
+                    .exec()
+                    .then(async (udata) => {
+
+                        finalData.push(udata[0])
+                    })
+            }
+            res.status(200).json(finalData)
+
+        })
+        .catch((err) => {
+            // Handle error
+            res.status(500).json({ error: 'Internal server error' });
+        });
+})
+
 
 module.exports = requestRout;
