@@ -46,14 +46,17 @@ authRouters.post('/login', async (req, res) => {
 
     let enteredPassword = req.body.password;
     let dataFound = true;
+    let finalData = {};
     await Model.find({ uname: req.body.uname })
         .exec()
         .then(async (data) => {
             // Return the matching data
-            
+
             for (let i = 0; i < data.length; i++) {
+                console.log(i)
+                console.log(data.length - 1)
                 let isMatch = false;
-                bcrypt.compare(enteredPassword, data[i].password, async (err, result) => {
+                bcrypt.compare(enteredPassword, data[i].password, (err, result) => {
                     if (err) {
                         // Handle error
                         return;
@@ -65,30 +68,42 @@ authRouters.post('/login', async (req, res) => {
                         // console.log(data[i]);
                         dataFound = false;
                         isMatch = true;
-                        res.status(200).json({
+                        finalData = {
                             "id": data[i]._id,
                             "uname": data[i].uname,
                             "role": data[i].role
-                        })
+                        }
                         
+                       
+
 
                     } else {
                         // Passwords do not match
                         console.log('Passwords do not match');
                     }
+                    if (i == data.length - 1) {
+                        if (dataFound) {
+                            console.log("Data not found")
+                            res.status(404).json({ error: 'Data not found' });
+                        }else{
+                            res.status(200).json(finalData)
+                        }
+
+                    }
                 });
-                if (isMatch) {
-                    break;
-                }
-                
+
+
             }
+
+
+
 
         })
         .catch((err) => {
             // Handle error
             res.status(500).json({ error: 'Internal server error' });
         });
-        
+
 })
 
 module.exports = authRouters;
