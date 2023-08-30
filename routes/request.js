@@ -47,7 +47,7 @@ requestRout.post('/update_request', async (req, res) => {
 requestRout.get(`/admin_notification/:id`, async (req, res) => {
     const id = req.params.id;
 
-    await Model.find({ woker_id: id, requested: "1" })
+    await Model.find({ woker_id: id})
         .exec()
         .then(async (data) => {
 
@@ -58,8 +58,11 @@ requestRout.get(`/admin_notification/:id`, async (req, res) => {
                 await AccountModel.find({ id: iterator.cus_id })
                     .exec()
                     .then(async (udata) => {
-
-                        finalData.push(udata[0])
+                        let dataWithStat = {
+                            "status": iterator.requested,
+                            "data": udata[0]
+                        }
+                        finalData.push(dataWithStat)
                     })
             }
             res.status(200).json(finalData)
@@ -85,9 +88,9 @@ requestRout.get(`/cus_notification/:id`, async (req, res) => {
                         .exec()
                         .then(async (udata) => {
                             let dataR = {
-                                "name":udata[0].fname + " " + udata[0].lname,
-                                "category" : udata[0].category,
-                                "status" : iterator.requested
+                                "name": udata[0].fname + " " + udata[0].lname,
+                                "category": udata[0].category,
+                                "status": iterator.requested
                             }
                             finalData.push(dataR)
 
